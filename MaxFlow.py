@@ -15,7 +15,7 @@ def start():
         print('open a JSON file first.')
 
 def _algorithm(ways, key, finish_vertex):
-    result = {'':''}
+    result = {'not_empty':'not_false'}
     counter = 10
 
     while result and counter > 0:
@@ -39,7 +39,7 @@ def _algorithm(ways, key, finish_vertex):
 
 def _maxFlow(ways, vertex_key, finish_vertex, result):
     if vertex_key == finish_vertex:
-        result['path'].append(finish_vertex)
+        _addVertexToPath(vertex_key, result['path'])
         return result
 
     temp_result = None
@@ -47,23 +47,16 @@ def _maxFlow(ways, vertex_key, finish_vertex, result):
 
     while not temp_result and ways_copy[vertex_key]:
         vertex = ways_copy[vertex_key]
-        
-        if vertex_key not in result['path']:
-            result['path'].append(vertex_key)
-        
+        _addVertexToPath(vertex_key, result['path'])
         max_value = _maxValue(vertex, result['path'])
 
         if max_value == 0:
             return None
 
-        next_way_vertex = _nextVertex(vertex, max_value)
-        ways_copy = _removeVertexKey(ways_copy, next_way_vertex)
-        temp_result = _maxFlow(ways_copy, next_way_vertex, finish_vertex, result)
-
-        if temp_result:
-            result['max_values'].append(max_value)
-        else:
-            del result['path'][-1]
+        next_vertex_key = _nextVertex(vertex, max_value)
+        ways_copy = _removeVertexKey(ways_copy, next_vertex_key)
+        temp_result = _maxFlow(ways_copy, next_vertex_key, finish_vertex, result)
+        _persistResultOrRemoveLastPath(max_value, temp_result, result)
 
     return result
 
@@ -97,3 +90,16 @@ def _removeVertexKey(ways, key):
             del vertex[key] 
     
     return ways
+
+def _removeLastPath(path):
+    del path[-1]
+
+def _addVertexToPath(vertex_key, path):
+    if vertex_key not in path:
+        path.append(vertex_key)
+
+def _persistResultOrRemoveLastPath(max_value, temp_result, result):
+    if temp_result:
+            result['max_values'].append(max_value)
+    else:
+        _removeLastPath(result['path'])
