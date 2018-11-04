@@ -1,3 +1,4 @@
+# It's distributed under the MIT license (https://choosealicense.com/licenses/mit/)
 
 import copy
 

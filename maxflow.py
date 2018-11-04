@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+
+# It's distributed under the MIT license (https://choosealicense.com/licenses/mit/)
+
 import Input
 
 def main():
