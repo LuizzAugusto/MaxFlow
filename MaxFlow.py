@@ -4,10 +4,8 @@ import copy
 
 state = {'json': None, 'value': None}
 
-def start():
+def start(start_vertex, finish_vertex):
     ways = state['json']
-    start_vertex = '1'
-    finish_vertex = '5'
 
     if ways:
         _algorithm(ways, start_vertex, finish_vertex)
@@ -68,7 +66,11 @@ def _maxValue(vertex, path):
         if key in path:
             del vertex_copy[key]
 
-    max_value = max(tuple(vertex_copy.values()))
+    try:
+        max_value = max(tuple(vertex_copy.values()))
+    except:
+        max_value = 0
+    
     return max_value
 
 def _nextVertex(vertex, max_value):

@@ -2,6 +2,11 @@
 
 import InstructionMethods
 
+try:
+    import readline
+except:
+    pass
+
 instructionSet = InstructionMethods.instructionSet
 
 def terminal():

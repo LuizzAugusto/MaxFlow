@@ -4,11 +4,11 @@
 
 import Input
 
-def main():
+def _main():
     Input.InstructionMethods.clear()
     
     while(Input.InstructionMethods.state['on']):
         Input.terminal()
 
 if __name__ == '__main__':
-    main()
+    _main()

@@ -3,19 +3,22 @@
 import MaxFlow
 import SimpleFile
 import json
+import txt2json
 
 state = {
     'on':True,
     'help': \
-        "start -> Start algorithm\n" + \
-        "clear -> clear terminal" + \
+        "start {initial_vertex finish_vertex}-> Start algorithm\n" + \
+        "open -> Open json file\n" + \
+        "clear -> clear terminal\n" + \
         "open {path} -> Open file\n" + \
         "exit -> Exit program\n" + \
+        "txt2json -> Converts structured txt to json\n" + \
         "help -> Show this message"
 }
 
 def start(*args):
-    MaxFlow.start()
+    MaxFlow.start(str(args[1]), str(args[2]))
 
 def clear(*args):
     print('\033c')
@@ -38,10 +41,15 @@ def off(*args):
 def helpMsg(*args):
     print(state['help'])
 
+def convertion(*args):
+    filename = args[1]
+    txt2json.execute(filename)
+
 instructionSet = {
     'start':start,
     'clear':clear,
     'exit':off,
     'open':openJson,
-    'help':helpMsg
+    'help':helpMsg,
+    'txt2json':convertion
 }
